@@ -33,15 +33,15 @@ func (node *SkipListNode) putOrUpdate(keyToInsert VersionedKey, value Value, lev
 	//key does not exist already
 	newLevel := levelGenerator.Generate()
 	newNode := NewSkipListNode(keyToInsert, value, newLevel)
-	for level := unit8(0); level < newLevel; level++ {
-		newNode.tower[leve] = precedingNodes[level].tower[level]
+	for level := uint8(0); level < newLevel; level++ {
+		newNode.tower[level] = precedingNodes[level].tower[level]
 		precedingNodes[level].tower[level] = newNode
 	}
 
 	return true
 }
 
-func (node *SkiplistNode) get(key VersionedKey) (Value, bool) {
+func (node *SkipListNode) get(key VersionedKey) (Value, bool) {
 	node, ok := node.matchingNode(key)
 	if ok {
 		return node.value, true
@@ -53,7 +53,7 @@ func (node *SkipListNode) matchingNode(keyToMatch VersionedKey) (*SkipListNode, 
 	current := node
 	lastNodeWithTheKey := node
 
-	for level := len(node.forwards); level >= 0; level-- {
+	for level := len(node.tower); level >= 0; level-- {
 		//move right
 		for current.tower[level] != nil && current.tower[level].key.compare(keyToMatch) < 0 {
 			current = current.tower[level]
