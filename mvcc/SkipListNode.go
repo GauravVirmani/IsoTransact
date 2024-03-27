@@ -53,7 +53,7 @@ func (node *SkipListNode) matchingNode(keyToMatch VersionedKey) (*SkipListNode, 
 	current := node
 	lastNodeWithTheKey := node
 
-	for level := len(node.tower); level >= 0; level-- {
+	for level := len(node.tower) - 1; level >= 0; level-- {
 		//move right
 		for current.tower[level] != nil && current.tower[level].key.compare(keyToMatch) < 0 {
 			current = current.tower[level]
