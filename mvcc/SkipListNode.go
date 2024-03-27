@@ -1,6 +1,8 @@
 package mvcc
 
-import "IsoTransact/mvcc/utils"
+import (
+	"IsoTransact/mvcc/utils"
+)
 
 type SkipListNode struct {
 	key   VersionedKey
