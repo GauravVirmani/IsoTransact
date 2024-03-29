@@ -17,6 +17,7 @@ type callbackMessage struct {
 	outNotification chan struct{}
 }
 
+// TransactionTimestampMark TODO: DO we need doneTill to be atomic?
 type TransactionTimestampMark struct {
 	doneTill                              atomic.Uint64
 	timestampChannel                      chan timeMessage
