@@ -111,3 +111,9 @@ func (oracle *Oracle) trackReadyToCommitTimestamp(transaction *ReadWriteTransact
 func (oracle *Oracle) finishBeginTimestampForReadonlyTransaction(transaction *ReadOnlyTransaction) {
 	oracle.beginTimestampMark.Finish(transaction.beginTimestamp)
 }
+
+func (oracle *Oracle) Stop() {
+	oracle.beginTimestampMark.Stop()
+	oracle.commitTimestampMark.Stop()
+	oracle.transactionExecutor.Stop()
+}

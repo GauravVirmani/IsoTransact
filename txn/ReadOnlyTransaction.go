@@ -8,6 +8,14 @@ type ReadOnlyTransaction struct {
 	oracle         *Oracle
 }
 
+func NewReadOnlyTransaction(oracle *Oracle) *ReadOnlyTransaction {
+	return &ReadOnlyTransaction{
+		beginTimestamp: oracle.beginTimestamp(),
+		oracle:         oracle,
+		memTable:       oracle.transactionExecutor.memtable,
+	}
+}
+
 func (transaction *ReadOnlyTransaction) Get(key []byte) (mvcc.Value, bool) {
 	versionedKey := mvcc.NewVersionedKey(key, transaction.beginTimestamp)
 	return transaction.memTable.Get(*versionedKey)
