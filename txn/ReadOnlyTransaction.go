@@ -24,7 +24,3 @@ func (transaction *ReadOnlyTransaction) Get(key []byte) (mvcc.Value, bool) {
 func (transaction *ReadOnlyTransaction) FinishBeginTimestampForReadonlyTransaction() {
 	transaction.oracle.finishBeginTimestampForReadonlyTransaction(transaction)
 }
-
-func (transaction *ReadOnlyTransaction) PrintTable() {
-	transaction.memTable.PrintTable()
-}

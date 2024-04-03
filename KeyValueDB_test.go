@@ -29,7 +29,6 @@ func TestGetsTheValueOfAnExistingKey(t *testing.T) {
 	<-waitChannel
 
 	_ = db.Get(func(transaction *txn.ReadOnlyTransaction) {
-		transaction.PrintTable()
 		value, exists := transaction.Get([]byte("HDD"))
 		assert.Equal(t, true, exists)
 		assert.Equal(t, []byte("Hard disk"), value.Slice())
