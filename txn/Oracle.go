@@ -117,3 +117,7 @@ func (oracle *Oracle) Stop() {
 	oracle.commitTimestampMark.Stop()
 	oracle.transactionExecutor.Stop()
 }
+
+func (oracle *Oracle) CommittedTransactionLength() int {
+	return len(oracle.committedTransactions)
+}

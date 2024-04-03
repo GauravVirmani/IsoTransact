@@ -26,6 +26,9 @@ func (executor *TransactionExecutor) spin() {
 		case timestampedBatch := <-executor.batchChannel:
 			executor.applyToStorage(timestampedBatch)
 			executor.markApplied(timestampedBatch)
+		case <-executor.stopChannel:
+			close(executor.batchChannel)
+			return
 		}
 	}
 }

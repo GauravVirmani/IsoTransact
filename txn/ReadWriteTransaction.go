@@ -2,7 +2,7 @@ package txn
 
 import (
 	"IsoTransact/mvcc"
-	"errors"
+	"IsoTransact/txn/errors"
 )
 
 type ReadWriteTransaction struct {
@@ -42,7 +42,7 @@ func (transaction *ReadWriteTransaction) PutOrUpdate(key []byte, value []byte) e
 
 func (transaction *ReadWriteTransaction) Commit() (<-chan struct{}, error) {
 	if transaction.batch.IsEmpty() {
-		return nil, errors.New("empty write batch, nothing to commit")
+		return nil, errors.EmptyTxnError
 	}
 
 	// Send the transaction to the executor in the increasing order of the commitTimestamp.
