@@ -1,6 +1,9 @@
 package txn
 
-import "IsoTransact/mvcc"
+import (
+	"IsoTransact/mvcc"
+	"fmt"
+)
 
 type TransactionExecutor struct {
 	batchChannel chan TimestampedBatch
@@ -30,6 +33,7 @@ func (executor *TransactionExecutor) spin() {
 
 func (executor *TransactionExecutor) applyToStorage(timestampedBatch TimestampedBatch) {
 	for _, keyValuePair := range timestampedBatch.AllPairs() {
+		fmt.Println("[applyToStorage] Writing: ", string(keyValuePair.getKey()), string(keyValuePair.getValue()))
 		executor.memtable.PutOrUpdate(
 			*mvcc.NewVersionedKey(keyValuePair.getKey(), timestampedBatch.timestamp),
 			mvcc.NewValue(keyValuePair.getValue()),

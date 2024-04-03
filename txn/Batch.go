@@ -3,6 +3,7 @@ package txn
 import (
 	"bytes"
 	"errors"
+	"fmt"
 )
 
 type KeyValuePair struct {
@@ -19,7 +20,7 @@ func (pair KeyValuePair) getKey() []byte {
 }
 
 func (pair KeyValuePair) getValue() []byte {
-	return pair.key
+	return pair.value
 }
 
 type Batch struct {
@@ -48,6 +49,7 @@ func (batch *Batch) Add(key, value []byte) error {
 	if batch.Contains(key) {
 		return errors.New("batch already contains the key")
 	}
+	fmt.Println("[Add] Writing: ", string(key), string(value))
 	batch.pairs = append(batch.pairs, *newKeyValuePair(key, value))
 	return nil
 }
